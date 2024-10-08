@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ToggleTheme from "./toggle-theme";
 
 export default function MainNav() {
 	return (
@@ -11,7 +12,7 @@ export default function MainNav() {
 
 			<div className="flex items-center gap-2">
 				<Link href="#">Logout</Link>
-				<Link href="#">Dark</Link>
+				<ToggleTheme />
 			</div>
 		</nav>
 	);
