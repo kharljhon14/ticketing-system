@@ -1,4 +1,5 @@
 import StatusBadge from "@/components/status-badge";
+import TicketPriority from "@/components/ticket-priority";
 import {
 	Table,
 	TableBody,
@@ -21,8 +22,12 @@ export default function DataTable({ tickets }: Props) {
 					<TableHeader>
 						<TableRow>
 							<TableHead>Title</TableHead>
-							<TableHead>Status</TableHead>
-							<TableHead>Priority</TableHead>
+							<TableHead>
+								<div className="flex justify-center">Status</div>
+							</TableHead>
+							<TableHead>
+								<div className="flex justify-center">Priority</div>
+							</TableHead>
 							<TableHead>Created At</TableHead>
 						</TableRow>
 					</TableHeader>
@@ -31,9 +36,15 @@ export default function DataTable({ tickets }: Props) {
 							<TableRow key={ticket.id} data-href="/">
 								<TableCell>{ticket.title}</TableCell>
 								<TableCell>
-									<StatusBadge status={ticket.status} />
+									<div className="flex justify-center">
+										<StatusBadge status={ticket.status} />
+									</div>
 								</TableCell>
-								<TableCell>{ticket.priority}</TableCell>
+								<TableCell>
+									<div className="flex justify-center">
+										<TicketPriority priority={ticket.priority} />
+									</div>
+								</TableCell>
 								<TableCell>
 									{ticket.createdAt.toLocaleDateString("en-US", {
 										year: "2-digit",
