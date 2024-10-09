@@ -1,3 +1,4 @@
+import StatusBadge from "@/components/status-badge";
 import {
 	Table,
 	TableBody,
@@ -29,9 +30,20 @@ export default function DataTable({ tickets }: Props) {
 						{tickets?.map((ticket) => (
 							<TableRow key={ticket.id} data-href="/">
 								<TableCell>{ticket.title}</TableCell>
-								<TableCell>{ticket.status}</TableCell>
+								<TableCell>
+									<StatusBadge status={ticket.status} />
+								</TableCell>
 								<TableCell>{ticket.priority}</TableCell>
-								<TableCell>{ticket.createdAt.toLocaleDateString()}</TableCell>
+								<TableCell>
+									{ticket.createdAt.toLocaleDateString("en-US", {
+										year: "2-digit",
+										month: "2-digit",
+										day: "2-digit",
+										hour: "numeric",
+										minute: "2-digit",
+										hour12: true,
+									})}
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
