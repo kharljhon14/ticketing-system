@@ -14,14 +14,21 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "./ui/select";
+import { Button } from "./ui/button";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 export default function TicketForm() {
 	const form = useForm<TicketSchemaType>({
 		resolver: zodResolver(ticketSchema),
 	});
 
-	const onSubmit: SubmitHandler<TicketSchemaType> = (values) => {
-		console.log(values);
+	const router = useRouter();
+
+	const onSubmit: SubmitHandler<TicketSchemaType> = async (values) => {
+		await axios.post("/api/ticket", values);
+		router.push("/tickets");
+		router.refresh();
 	};
 
 	return (
@@ -57,24 +64,23 @@ export default function TicketForm() {
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Status</FormLabel>
-									<FormControl>
-										<Select
-											onOpenChange={field.onChange}
-											defaultValue={field.value}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue placeholder="Status..." />
-												</SelectTrigger>
-											</FormControl>
 
-											<SelectContent>
-												<SelectItem value="OPEN">Open</SelectItem>
-												<SelectItem value="STARTED">Started</SelectItem>
-												<SelectItem value="CLOSED">Closed</SelectItem>
-											</SelectContent>
-										</Select>
-									</FormControl>
+									<Select
+										onValueChange={field.onChange}
+										defaultValue={field.value}
+									>
+										<FormControl>
+											<SelectTrigger>
+												<SelectValue placeholder="Status..." />
+											</SelectTrigger>
+										</FormControl>
+
+										<SelectContent>
+											<SelectItem value="OPEN">Open</SelectItem>
+											<SelectItem value="STARTED">Started</SelectItem>
+											<SelectItem value="CLOSED">Closed</SelectItem>
+										</SelectContent>
+									</Select>
 								</FormItem>
 							)}
 						/>
@@ -84,28 +90,30 @@ export default function TicketForm() {
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Priority</FormLabel>
-									<FormControl>
-										<Select
-											onOpenChange={field.onChange}
-											defaultValue={field.value}
-										>
-											<FormControl>
-												<SelectTrigger>
-													<SelectValue placeholder="Priority..." />
-												</SelectTrigger>
-											</FormControl>
 
-											<SelectContent>
-												<SelectItem value="LOW">Low</SelectItem>
-												<SelectItem value="MEDIUM">Medium</SelectItem>
-												<SelectItem value="HIGH">High</SelectItem>
-											</SelectContent>
-										</Select>
-									</FormControl>
+									<Select
+										onValueChange={field.onChange}
+										defaultValue={field.value}
+									>
+										<FormControl>
+											<SelectTrigger>
+												<SelectValue placeholder="Priority..." />
+											</SelectTrigger>
+										</FormControl>
+
+										<SelectContent>
+											<SelectItem value="LOW">Low</SelectItem>
+											<SelectItem value="MEDIUM">Medium</SelectItem>
+											<SelectItem value="HIGH">High</SelectItem>
+										</SelectContent>
+									</Select>
 								</FormItem>
 							)}
 						/>
 					</div>
+					<Button type="submit" disabled={form.formState.isSubmitting}>
+						Submit
+					</Button>
 				</form>
 			</Form>
 		</div>
