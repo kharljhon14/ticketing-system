@@ -1,7 +1,9 @@
-import TicketTable from "@/features/tickets/ticket-table";
-import prisma from "../../../prisma/db";
-import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+
+import { buttonVariants } from "@/components/ui/button";
+import TicketTable from "@/features/tickets/ticket-table";
+
+import prisma from "../../../prisma/db";
 
 export default async function TicketsPage() {
 	const tickets = await prisma.ticket.findMany();

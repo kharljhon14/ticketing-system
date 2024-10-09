@@ -1,5 +1,7 @@
-import type { Metadata } from "next";
 import "./globals.css";
+
+import type { Metadata } from "next";
+
 import MainNav from "@/components/main-nav";
 import { ThemeProvider } from "@/providers/theme-provider";
 
@@ -17,13 +19,13 @@ export default function RootLayout({
 		<html lang="en">
 			<body>
 				<ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
-					<header className="flex flex-col items-center border-b mb-5 px-5 py-3">
-						<div className="max-w-6xl w-full">
+					<header className="mb-5 flex flex-col items-center border-b px-5 py-3">
+						<div className="w-full max-w-6xl">
 							<MainNav />
 						</div>
 					</header>
 					<main className="flex flex-col items-center">
-						<div className="max-w-6xl w-full">{children}</div>
+						<div className="w-full max-w-6xl">{children}</div>
 					</main>
 				</ThemeProvider>
 			</body>

@@ -1,6 +1,6 @@
 import type { Priority } from "@prisma/client";
-
 import { Flame } from "lucide-react";
+
 interface Props {
 	priority: Priority;
 }

@@ -1,12 +1,18 @@
 "use client";
 
-import { Controller, type SubmitHandler, useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ticketSchema, type TicketSchemaType } from "@/schemas/ticket";
-import { Input } from "./ui/input";
-import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
+
+import { zodResolver } from "@hookform/resolvers/zod";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { Controller, type SubmitHandler, useForm } from "react-hook-form";
+import SimpleMDE from "react-simplemde-editor";
+
+import { ticketSchema, type TicketSchemaType } from "@/schemas/ticket";
+
+import { Button } from "./ui/button";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "./ui/form";
+import { Input } from "./ui/input";
 import {
 	Select,
 	SelectContent,
@@ -14,9 +20,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "./ui/select";
-import { Button } from "./ui/button";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 
 export default function TicketForm() {
 	const form = useForm<TicketSchemaType>({
@@ -32,10 +35,10 @@ export default function TicketForm() {
 	};
 
 	return (
-		<div className="rounded-md border w-full p-4">
+		<div className="w-full rounded-md border p-4">
 			<Form {...form}>
 				<form
-					className="space-y-8 w-full"
+					className="w-full space-y-8"
 					onSubmit={form.handleSubmit(onSubmit)}
 				>
 					<FormField

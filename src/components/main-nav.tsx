@@ -1,6 +1,7 @@
 import Link from "next/link";
-import ToggleTheme from "./toggle-theme";
+
 import MainNavLinks from "./main-nav-links";
+import ToggleTheme from "./toggle-theme";
 
 export default function MainNav() {
 	return (

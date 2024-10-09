@@ -1,3 +1,5 @@
+import type { Ticket } from "@prisma/client";
+
 import StatusBadge from "@/components/status-badge";
 import TicketPriority from "@/components/ticket-priority";
 import {
@@ -8,7 +10,6 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import type { Ticket } from "@prisma/client";
 
 interface Props {
 	tickets: Ticket[];
@@ -16,7 +17,7 @@ interface Props {
 
 export default function DataTable({ tickets }: Props) {
 	return (
-		<div className="w-full mt-5">
+		<div className="mt-5 w-full">
 			<div className="rounded-sm border">
 				<Table>
 					<TableHeader>

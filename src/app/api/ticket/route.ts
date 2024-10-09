@@ -1,5 +1,7 @@
+import { type NextRequest, NextResponse } from "next/server";
+
 import { ticketSchema } from "@/schemas/ticket";
-import { NextResponse, type NextRequest } from "next/server";
+
 import prisma from "../../../../prisma/db";
 
 export async function POST(request: NextRequest) {
