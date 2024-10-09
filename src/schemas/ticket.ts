@@ -7,4 +7,4 @@ export const ticketSchema = z.object({
 	priority: z.string().min(1, "Priority").max(10).optional(),
 });
 
-export type ticketSchemaType = z.infer<typeof ticketSchema>;
+export type TicketSchemaType = z.infer<typeof ticketSchema>;
