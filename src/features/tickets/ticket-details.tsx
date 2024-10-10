@@ -1,5 +1,6 @@
 import type { Ticket } from "@prisma/client";
 import Link from "next/link";
+import ReactMarkDown from "react-markdown";
 
 import StatusBadge from "@/components/status-badge";
 import TicketPriority from "@/components/ticket-priority";
@@ -30,7 +31,7 @@ export default function TicketDetails({ ticket }: Props) {
 					</div>
 					<CardTitle>{ticket.title}</CardTitle>
 					<CardDescription>
-						Created:
+						Created:{" "}
 						{ticket.createdAt.toLocaleDateString("en-US", {
 							year: "2-digit",
 							month: "2-digit",
@@ -41,9 +42,13 @@ export default function TicketDetails({ ticket }: Props) {
 						})}
 					</CardDescription>
 				</CardHeader>
-				<CardContent>{ticket.description}</CardContent>
+				<CardContent>
+					<ReactMarkDown className="prose dark:prose-invert">
+						{ticket.description}
+					</ReactMarkDown>
+				</CardContent>
 				<CardFooter>
-					Updated:
+					Updated:{" "}
 					{ticket.updatedAt.toLocaleDateString("en-US", {
 						year: "2-digit",
 						month: "2-digit",
