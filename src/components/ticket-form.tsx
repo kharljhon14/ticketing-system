@@ -3,6 +3,7 @@
 import "easymde/dist/easymde.min.css";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import type { Ticket } from "@prisma/client";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { Controller, type SubmitHandler, useForm } from "react-hook-form";
@@ -21,7 +22,11 @@ import {
 	SelectValue,
 } from "./ui/select";
 
-export default function TicketForm() {
+interface Props {
+	ticket?: Ticket;
+}
+
+export default function TicketForm({ ticket }: Props) {
 	const form = useForm<TicketSchemaType>({
 		resolver: zodResolver(ticketSchema),
 	});
@@ -29,7 +34,11 @@ export default function TicketForm() {
 	const router = useRouter();
 
 	const onSubmit: SubmitHandler<TicketSchemaType> = async (values) => {
-		await axios.post("/api/ticket", values);
+		if (ticket) {
+			await axios.patch(`/api/ticket/${ticket.id}`, values);
+		} else {
+			await axios.post("/api/ticket", values);
+		}
 		router.push("/tickets");
 		router.refresh();
 	};
@@ -43,6 +52,7 @@ export default function TicketForm() {
 				>
 					<FormField
 						control={form.control}
+						defaultValue={ticket?.title}
 						name="title"
 						render={({ field }) => (
 							<FormItem>
@@ -55,6 +65,7 @@ export default function TicketForm() {
 					/>
 					<Controller
 						name="description"
+						defaultValue={ticket?.description}
 						control={form.control}
 						render={({ field }) => (
 							<SimpleMDE {...field} placeholder="Description..." />
@@ -64,6 +75,7 @@ export default function TicketForm() {
 						<FormField
 							control={form.control}
 							name="status"
+							defaultValue={ticket?.status}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Status</FormLabel>
@@ -90,6 +102,7 @@ export default function TicketForm() {
 						<FormField
 							control={form.control}
 							name="priority"
+							defaultValue={ticket?.priority}
 							render={({ field }) => (
 								<FormItem>
 									<FormLabel>Priority</FormLabel>
@@ -115,7 +128,7 @@ export default function TicketForm() {
 						/>
 					</div>
 					<Button type="submit" disabled={form.formState.isSubmitting}>
-						Submit
+						{ticket ? "Update Ticket" : "Create Ticket"}
 					</Button>
 				</form>
 			</Form>
