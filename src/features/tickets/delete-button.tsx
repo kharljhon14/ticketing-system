@@ -33,7 +33,7 @@ export default function DeleteButton({ ticketId }: Props) {
 			await axios.delete(`/api/ticket/${ticketId}`);
 			router.push("/tickets");
 			router.refresh();
-		} catch (_error: unknown) {
+		} catch (_error) {
 			setIsDeleting(false);
 			setError("Unkown Error Occured");
 		}
