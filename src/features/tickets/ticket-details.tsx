@@ -14,6 +14,8 @@ import {
 	CardTitle,
 } from "@/components/ui/card";
 
+import DeleteButton from "./delete-button";
+
 interface Props {
 	ticket: Ticket;
 }
@@ -66,12 +68,7 @@ export default function TicketDetails({ ticket }: Props) {
 				>
 					Edit Ticket
 				</Link>
-				<Link
-					href={`/tickets/edit/${ticket.id}`}
-					className={`${buttonVariants({ variant: "default" })}`}
-				>
-					Delete Ticket
-				</Link>
+				<DeleteButton ticketId={ticket.id} />
 			</div>
 		</div>
 	);
