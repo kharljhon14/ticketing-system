@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import Pagination from "@/components/pagination";
+import StatusFilter from "@/components/status-filter";
 import { buttonVariants } from "@/components/ui/button";
 import TicketTable from "@/features/tickets/ticket-table";
 
@@ -30,6 +31,7 @@ export default async function TicketsPage({
 			>
 				New Ticket
 			</Link>
+			<StatusFilter />
 			<TicketTable tickets={tickets} />
 			<Pagination
 				itemCount={ticketCount}
