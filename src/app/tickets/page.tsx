@@ -1,3 +1,4 @@
+import { Status } from "@prisma/client";
 import Link from "next/link";
 
 import Pagination from "@/components/pagination";
@@ -9,6 +10,7 @@ import prisma from "../../../prisma/db";
 
 interface SearchParams {
 	page: string;
+	status: string;
 }
 
 export default async function TicketsPage({
@@ -16,22 +18,43 @@ export default async function TicketsPage({
 }: { searchParams: SearchParams }) {
 	const pageSize = 10;
 	const page = Number.parseInt(searchParams.page) || 1;
-	const ticketCount = await prisma.ticket.count();
 
+	const statuses = Object.values(Status);
+
+	const status = statuses.includes(searchParams.status as keyof typeof Status)
+		? searchParams.status
+		: undefined;
+
+	let where = {};
+
+	if (status) {
+		where = {
+			status,
+		};
+	} else {
+		where = {
+			NOT: [{ status: "CLOSED" as Status }],
+		};
+	}
+
+	const ticketCount = await prisma.ticket.count({ where });
 	const tickets = await prisma.ticket.findMany({
+		where,
 		take: pageSize,
 		skip: (page - 1) * pageSize,
 	});
 
 	return (
 		<div>
-			<Link
-				href="/tickets/new"
-				className={buttonVariants({ variant: "default" })}
-			>
-				New Ticket
-			</Link>
-			<StatusFilter />
+			<div className="flex gap-2">
+				<Link
+					href="/tickets/new"
+					className={buttonVariants({ variant: "default" })}
+				>
+					New Ticket
+				</Link>
+				<StatusFilter />
+			</div>
 			<TicketTable tickets={tickets} />
 			<Pagination
 				itemCount={ticketCount}
