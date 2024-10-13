@@ -1,3 +1,4 @@
+import bcrypt from "bcryptjs";
 import { type NextRequest, NextResponse } from "next/server";
 
 import { userSchema } from "@/schemas/user";
@@ -12,6 +13,7 @@ export async function POST(request: NextRequest) {
 		return NextResponse.json(validation.error.format(), { status: 400 });
 	}
 
+	// Check if the username has been already taken
 	const duplicate = await prisma.user.findUnique({
 		where: {
 			username: body.username,
@@ -24,4 +26,16 @@ export async function POST(request: NextRequest) {
 			{ status: 409 },
 		);
 	}
+
+	// Hash the users password
+	const hashPassword = await bcrypt.hash(body.password, 10);
+	body.password = hashPassword;
+
+	const newUser = await prisma.user.create({
+		data: { ...body },
+	});
+
+	const { password: _password, ...userWithoutPassword } = newUser;
+
+	return NextResponse.json(userWithoutPassword, { status: 201 });
 }
