@@ -1,3 +1,9 @@
+import UserForm from "@/components/user-form";
+
 export default function UsersPage() {
-	return <h1>User Page</h1>;
+	return (
+		<div>
+			<UserForm />
+		</div>
+	);
 }
