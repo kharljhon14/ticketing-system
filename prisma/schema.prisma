@@ -39,12 +39,12 @@ enum Priority {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       Int      @id @default(autoincrement())
   name     String
-  username String
+  username String   @unique
   password String
-  role     Role   @default(USER)
-  Ticket Ticket[]
+  role     Role     @default(USER)
+  Ticket   Ticket[]
 }
 
 enum Role {
