@@ -30,7 +30,7 @@ export default function DeleteButton({ ticketId }: Props) {
 	const deleteTicket = async () => {
 		try {
 			setIsDeleting(true);
-			await axios.delete(`/api/ticket/${ticketId}`);
+			await axios.delete(`/api/tickets/${ticketId}`);
 			router.push("/tickets");
 			router.refresh();
 		} catch (_error) {

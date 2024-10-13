@@ -35,10 +35,10 @@ export default function TicketForm({ ticket }: Props) {
 
 	const onSubmit: SubmitHandler<TicketSchemaType> = async (values) => {
 		if (ticket) {
-			await axios.patch(`/api/ticket/${ticket.id}`, values);
+			await axios.patch(`/api/tickets/${ticket.id}`, values);
 			router.push(`/tickets/${ticket.id}`);
 		} else {
-			await axios.post("/api/ticket", values);
+			await axios.post("/api/tickets", values);
 			router.push("/tickets");
 		}
 		router.refresh();
