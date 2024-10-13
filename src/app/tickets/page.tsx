@@ -1,4 +1,4 @@
-import { Status } from "@prisma/client";
+import { Status, type Ticket } from "@prisma/client";
 import Link from "next/link";
 
 import Pagination from "@/components/pagination";
@@ -8,9 +8,10 @@ import TicketTable from "@/features/tickets/ticket-table";
 
 import prisma from "../../../prisma/db";
 
-interface SearchParams {
+export interface SearchParams {
 	page: string;
 	status: string;
+	orderBy: keyof Ticket;
 }
 
 export default async function TicketsPage({
@@ -55,7 +56,7 @@ export default async function TicketsPage({
 				</Link>
 				<StatusFilter />
 			</div>
-			<TicketTable tickets={tickets} />
+			<TicketTable searchParams={searchParams} tickets={tickets} />
 			<Pagination
 				itemCount={ticketCount}
 				pageSize={pageSize}
