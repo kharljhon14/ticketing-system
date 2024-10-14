@@ -115,7 +115,7 @@ export default function UserForm({ user }: Props) {
                   >
                     <FormControl>
                       <SelectTrigger>
-                        <SelectValue placeholder="Status..." />
+                        <SelectValue placeholder="Role..." />
                       </SelectTrigger>
                     </FormControl>
 
