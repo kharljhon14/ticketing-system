@@ -1,15 +1,27 @@
 import { revalidateTag } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
 
 import { ticketUpdateSchema } from '@/schemas/ticket';
 
 import prisma from '../../../../../prisma/db';
+import options from '../../auth/[...nextauth]/options';
 
 interface Props {
   params: { id: string };
 }
 
 export async function PATCH(request: NextRequest, { params }: Props) {
+  const session = await getServerSession(options);
+
+  if (!session) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+
+  if (session.user.role !== 'ADMIN') {
+    return NextResponse.json({ error: 'Not admin' }, { status: 401 });
+  }
+
   const body = await request.json();
 
   // Validate the body object
@@ -48,6 +60,16 @@ export async function PATCH(request: NextRequest, { params }: Props) {
 }
 
 export async function DELETE(request: NextRequest, { params }: Props) {
+  const session = await getServerSession(options);
+
+  if (!session) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+
+  if (session.user.role !== 'ADMIN') {
+    return NextResponse.json({ error: 'Not admin' }, { status: 401 });
+  }
+
   // Check if ticket exist on the database
   const ticket = await prisma.ticket.findUnique({
     where: { id: Number.parseInt(params.id) },

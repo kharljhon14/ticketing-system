@@ -11,7 +11,7 @@ export default async function MainNav() {
 
   return (
     <nav className="flex  justify-between">
-      <MainNavLinks />
+      <MainNavLinks role={session?.user.role} />
       <div className="flex items-center gap-2">
         {session ? (
           <Link href="/api/auth/signout?callbackUrl=/">Logout</Link>

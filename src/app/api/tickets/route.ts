@@ -1,10 +1,18 @@
 import { type NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
 
 import { ticketSchema } from '@/schemas/ticket';
 
 import prisma from '../../../../prisma/db';
+import options from '../auth/[...nextauth]/options';
 
 export async function POST(request: NextRequest) {
+  const session = await getServerSession(options);
+
+  if (!session) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+
   const body = await request.json();
 
   // Validate the body object
