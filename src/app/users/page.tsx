@@ -1,9 +1,9 @@
-import UserForm from "@/components/user-form";
+import UserForm from '@/components/user-form';
 
 export default function UsersPage() {
-	return (
-		<div>
-			<UserForm />
-		</div>
-	);
+  return (
+    <div>
+      <UserForm />
+    </div>
+  );
 }

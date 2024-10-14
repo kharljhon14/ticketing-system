@@ -1,19 +1,19 @@
-import TicketDetails from "@/features/tickets/ticket-details";
+import TicketDetails from '@/features/tickets/ticket-details';
 
-import prisma from "../../../../prisma/db";
+import prisma from '../../../../prisma/db';
 
 interface Props {
-	params: { id: string };
+  params: { id: string };
 }
 
 export default async function ViewTicketPage({ params }: Props) {
-	const ticket = await prisma.ticket.findUnique({
-		where: { id: Number.parseInt(params.id) },
-	});
+  const ticket = await prisma.ticket.findUnique({
+    where: { id: Number.parseInt(params.id) },
+  });
 
-	if (!ticket) {
-		return <p className="text-destructive">Ticket not found!</p>;
-	}
+  if (!ticket) {
+    return <p className="text-destructive">Ticket not found!</p>;
+  }
 
-	return <TicketDetails ticket={ticket} />;
+  return <TicketDetails ticket={ticket} />;
 }

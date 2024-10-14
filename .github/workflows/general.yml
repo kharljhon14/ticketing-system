@@ -1,4 +1,4 @@
-name: "general"
+name: 'general'
 
 on: [push, pull_request]
 

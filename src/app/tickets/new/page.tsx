@@ -1,13 +1,13 @@
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic';
 
-const TicketForm = dynamic(() => import("@/components/ticket-form"), {
-	ssr: false,
+const TicketForm = dynamic(() => import('@/components/ticket-form'), {
+  ssr: false,
 });
 
 export default function NewTicketPage() {
-	return (
-		<div>
-			<TicketForm />
-		</div>
-	);
+  return (
+    <div>
+      <TicketForm />
+    </div>
+  );
 }
