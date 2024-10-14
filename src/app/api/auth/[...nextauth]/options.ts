@@ -13,10 +13,11 @@ const options: NextAuthOptions = {
         username: {
           label: 'Username',
           type: 'text',
-          placeholder: 'Username...',
+          placeholder: 'Username',
         },
         password: {
           label: 'Password',
+          placeholder: 'Password',
           type: 'password',
         },
       },
