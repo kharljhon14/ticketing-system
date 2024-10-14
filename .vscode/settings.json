@@ -10,5 +10,8 @@
   },
   "[prisma]": {
     "editor.defaultFormatter": "Prisma.prisma"
+  },
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   }
 }
