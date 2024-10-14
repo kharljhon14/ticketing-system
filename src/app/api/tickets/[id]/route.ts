@@ -1,6 +1,7 @@
+import { revalidateTag } from 'next/cache';
 import { type NextRequest, NextResponse } from 'next/server';
 
-import { ticketSchema } from '@/schemas/ticket';
+import { ticketUpdateSchema } from '@/schemas/ticket';
 
 import prisma from '../../../../../prisma/db';
 
@@ -12,7 +13,7 @@ export async function PATCH(request: NextRequest, { params }: Props) {
   const body = await request.json();
 
   // Validate the body object
-  const validation = ticketSchema.safeParse(body);
+  const validation = ticketUpdateSchema.safeParse(body);
 
   // Return 400 if bad request
   if (!validation.success) {
@@ -29,6 +30,10 @@ export async function PATCH(request: NextRequest, { params }: Props) {
     return NextResponse.json({ error: 'Ticket Not Found' }, { status: 404 });
   }
 
+  if (body?.assignedToUserId) {
+    body.assignedToUserId = parseInt(body.assignedToUserId);
+  }
+
   // Update the ticket with the new values
   const updateTicket = await prisma.ticket.update({
     where: { id: Number.parseInt(params.id) },
@@ -36,6 +41,8 @@ export async function PATCH(request: NextRequest, { params }: Props) {
       ...body,
     },
   });
+
+  revalidateTag(`ticket-${updateTicket.id}`);
 
   return NextResponse.json(updateTicket);
 }
