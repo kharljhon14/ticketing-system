@@ -29,7 +29,7 @@ export default async function Home() {
     <div>
       <div className="grid gap-4 md:grid-cols-2 px-2">
         <div>
-          <RecentTickets />
+          <RecentTickets tickets={tickets} />
         </div>
         <div>
           <DashChart />
